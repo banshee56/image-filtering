@@ -34,10 +34,3 @@ img_threshold = np.float32(img_edge > threshold)
 # everything below here just saves the outputs to files        
 fname = '%s/%s_03hough.png' % (resultsdir, file)
 cv2.imwrite(fname, 255 * img_hough / img_hough.max())
-
-
-data = img_hough
-with open("output.txt", "w") as txt_file:
-    for line in data:
-        txt_file.write(" ".join(str(line)) + "\n") # works with any number of elements in a line
-
