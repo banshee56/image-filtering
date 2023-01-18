@@ -22,6 +22,12 @@ def myEdgeFilter(img0, sigma):
     gradientDirection = np.degrees(np.arctan2(imgy, imgx))
     gradientMagnitude = np.hypot(imgx, imgy)
 
+    # run magnitude image through non-maximum suppression code
+    img1 = nonMaxSuppression(gradientMagnitude, gradientDirection)         
+    return img1
+
+
+def nonMaxSuppression(gradientMagnitude, gradientDirection):
     # the kernels to use in dilation for each angle
     # these kernels are shaped according to the gradient direction
     elem0 = np.array([[0, 0, 0], [1, 1, 1], [0, 0, 0]], dtype=np.uint8)     # 0 angle kernel shaped to consider the left and right pixels
@@ -73,5 +79,5 @@ def myEdgeFilter(img0, sigma):
                     img1[i, j] = 0
                 else:
                     img1[i, j] = dilate4[i, j]
-                    
+    
     return img1

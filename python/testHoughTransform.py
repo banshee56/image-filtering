@@ -34,3 +34,6 @@ img_threshold = np.float32(img_edge > threshold)
 # everything below here just saves the outputs to files        
 fname = '%s/%s_03hough.png' % (resultsdir, file)
 cv2.imwrite(fname, 255 * img_hough / img_hough.max())
+
+
+

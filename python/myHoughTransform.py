@@ -13,15 +13,18 @@ def myHoughTransform(Im, rhoRes, thetaRes):
 
     for x in range(Im.shape[1]):
         for y in range(Im.shape[0]):
-            # an edge pixel
+            # an edge pixel has value 1 on img_threshold
             if Im[y, x] != 0:
-                for theta in thetaScale:
+                # go through all theta values
+                for thetaIndex in range(len(thetaScale)):
+                    theta = thetaScale[thetaIndex]
                     rho = x * np.cos(theta) + y * np.sin(theta)
 
-                    # find the index of the bucket with the largest value smaller than rho
+                    # ignore theta values corresponding to negative rhos
                     if rho >= 0:
+                        # find the index of the bucket with the largest value *smaller* than rho
+                        # NOT SURE THIS IS RIGHT BUCKET PLACEMENT 
                         rhoIndex = np.searchsorted(rhoScale, rho, 'left')
-                        thetaIndex = thetaScale.index(theta)
                         img_hough[rhoIndex][thetaIndex] += 1
     
     return img_hough, rhoScale, thetaScale
