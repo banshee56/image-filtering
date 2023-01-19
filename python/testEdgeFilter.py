@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+from time import time
 
 from myEdgeFilter import myEdgeFilter
 from myHoughLines import myHoughLines
@@ -21,7 +22,7 @@ for file in os.listdir(datadir):
     if file.endswith('.jpg'):
 
         file = os.path.splitext(file)[0]
-        print(file)
+
         # read in images
         img = cv2.imread('%s/%s.jpg' % (datadir, file))
         
@@ -30,8 +31,11 @@ for file in os.listdir(datadir):
         
         img = np.float32(img) / 255
         
+        before = time()
         # actual Hough line code function calls
         img_edge = myEdgeFilter(img, sigma)
+        after = time()
+        print(after-before)
 
         # everything below here just saves the outputs to files
         fname = '%s/%s_01edge.png' % (resultsdir, file)

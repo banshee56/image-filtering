@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+from time import time
 
 from myEdgeFilter import myEdgeFilter
 from myHoughLines import myHoughLines

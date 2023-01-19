@@ -7,21 +7,31 @@ def myImageFilter(img0, h):
     
     # padding the image with 0's
     padded = np.pad(img0, ((padRLength, padRLength), (padCLength, padCLength)), mode='constant')
-    new = []                        # the values of the filtered image
+    img1 = np.zeros_like(img0)      # the filtered image, initialized to 0s
 
-    # go though the top left indices of each submatrix
-    for i in range(img0.shape[0]):
-        for j in range(img0.shape[1]):
-            # compute submatrix where filter and padded image overlap
-            submatrix = padded[i: h.shape[0]+i, j: h.shape[1]+j]
+    # we will go through each value/element in the kernel and calculate the element's contribution to the final image, img1
+    # we need the following variables for the calculation of the window for each kernel value
+    paddedLen0 = padded.shape[0]    # len of padded image on 1 axis
+    paddedLen1 = padded.shape[1]
+    hLen0 = h.shape[0]              # len of kernel on 1 axis
+    hLen1 = h.shape[1]
+ 
+    # go though each value in the kernel, h
+    for i in range(h.shape[0]):
+        for j in range(h.shape[1]):
+            # the value from the kernel to apply to image
+            value = h[i, j]
 
-            # the value to replace pixel intensity with
-            mul = np.multiply(submatrix, h)
-            val = np.sum(mul)
+            # the value is multiplied with image intensities in the range [i, valueRange0] horizontally across padded array
+            # and range [j, valueRange0] vertically across array
+            valueRange0 = paddedLen0 - hLen0 + i
+            valueRange1 = paddedLen1 - hLen1 + j
 
-            new.append(val)
+            # the contribution of that value by multiplying with the original (padded) image
+            valueContribution = np.multiply(value, padded[i : valueRange0 + 1, j : valueRange1 + 1])
 
-    # turn the filtered image values into an ndarray (same dtype as orig image input)
-    img1 = np.ndarray(shape=img0.shape, buffer=np.array(new))
+            # add contribution to final image (which is initialized to 0)
+            img1 = np.add(img1, valueContribution)
+           
     return img1
 
