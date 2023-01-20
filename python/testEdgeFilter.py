@@ -20,7 +20,7 @@ nLines    = 15
 
 for file in os.listdir(datadir):
     if file.endswith('.jpg'):
-
+        print(file)
         file = os.path.splitext(file)[0]
 
         # read in images
@@ -36,7 +36,7 @@ for file in os.listdir(datadir):
         img_edge = myEdgeFilter(img, sigma)
         after = time()
         print(after-before)
-
+        
         # everything below here just saves the outputs to files
         fname = '%s/%s_01edge.png' % (resultsdir, file)
         cv2.imwrite(fname, 255 * np.sqrt(img_edge / img_edge.max()))

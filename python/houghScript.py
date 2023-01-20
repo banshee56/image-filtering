@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+from time import time
 
 from myEdgeFilter import myEdgeFilter
 from myHoughLines import myHoughLines
@@ -35,7 +36,11 @@ for file in os.listdir(datadir):
         img_threshold = np.float32(img_edge > threshold)
         [img_hough, rhoScale, thetaScale] = myHoughTransform(img_threshold, \
                                                              rhoRes, thetaRes)
+        
+        before = time()
         [rhos, thetas] = myHoughLines(img_hough, nLines)
+        after = time()
+        print(after-before)
 
         lines = cv2.HoughLinesP(np.uint8(255 * img_threshold), rhoRes, thetaRes, \
                                 50, minLineLength = 20, maxLineGap = 5)

@@ -1,16 +1,17 @@
 import numpy as np
 
 def myHoughTransform(Im, rhoRes, thetaRes):
-    rhoScale = np.array([])   # an array with the UPPER boundary of each interval of rhos (i.e. [5, 10, 15, 20, ...] would result from
+    rhoScale = []   # an array with the UPPER boundary of each interval of rhos (i.e. [5, 10, 15, 20, ...] would result from
     # rhoRes=5, with the first index corresponding to the bucket with rho values [0, 5))
-    thetaScale = np.array([])
+    thetaScale = []
     
     # the maximum possible value for rho (distance) is the diagonal of the image
     diagonal = np.hypot(Im.shape[0], Im.shape[1])
-    rhoScale = list(np.arange(0+rhoRes, diagonal+rhoRes, rhoRes))
+    rhoScale = list(np.arange(0 + rhoRes, diagonal + rhoRes, rhoRes))
     thetaScale = list(np.arange(0, 2*np.pi, thetaRes))      # from 0 to 2pi as mentioned in the instructions
     img_hough = np.zeros(shape=(len(rhoScale), len(thetaScale)))
-
+    n = np.count_nonzero(Im)
+    print(n)
     for x in range(Im.shape[1]):
         for y in range(Im.shape[0]):
             # an edge pixel has value 1 on img_threshold
