@@ -2,7 +2,8 @@ import numpy as np
 import cv2  # For cv2.dilate function
 
 def myHoughLines(H, nLines):
-    peaks = nonMaxSuppression(H)
+    img = H.copy()
+    peaks = nonMaxSuppression(img)
     (rhos, thetas) = nLargestIndices(peaks, nLines)
 
     return (rhos, thetas)

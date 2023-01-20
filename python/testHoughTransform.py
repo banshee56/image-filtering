@@ -18,10 +18,9 @@ thetaRes  = np.pi / 90
 nLines    = 15
 # end of parameters
 
-before = time()
+m = time()
 for file in os.listdir(datadir):
     if file.endswith('.jpg'):
-
         file = os.path.splitext(file)[0]
         
         # read in images
@@ -36,7 +35,7 @@ for file in os.listdir(datadir):
         img_edge = myEdgeFilter(img, sigma)
         img_threshold = np.float32(img_edge > threshold)
         [img_hough, rhoScale, thetaScale] = myHoughTransform(img_threshold, \
-                                                             rhoRes, thetaRes)
+                                                             rhoRes, thetaRes)                                                            
 
         # everything below here just saves the outputs to files
         fname = '%s/%s_01edge.png' % (resultsdir, file)
@@ -47,6 +46,6 @@ for file in os.listdir(datadir):
         
         fname = '%s/%s_03hough.png' % (resultsdir, file)
         cv2.imwrite(fname, 255 * img_hough / img_hough.max())
-        
-after = time()
-print('time taken for hough transform on all images: '+str(after-before))
+
+n = time()
+print('time taken for hough transform on all images: '+str(n-m))

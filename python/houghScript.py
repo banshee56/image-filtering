@@ -18,6 +18,7 @@ thetaRes  = np.pi / 90
 nLines    = 15
 # end of parameters
 
+before = time()
 for file in os.listdir(datadir):
     if file.endswith('.jpg'):
 
@@ -37,10 +38,7 @@ for file in os.listdir(datadir):
         [img_hough, rhoScale, thetaScale] = myHoughTransform(img_threshold, \
                                                              rhoRes, thetaRes)
         
-        before = time()
         [rhos, thetas] = myHoughLines(img_hough, nLines)
-        after = time()
-        print(after-before)
 
         lines = cv2.HoughLinesP(np.uint8(255 * img_threshold), rhoRes, thetaRes, \
                                 50, minLineLength = 20, maxLineGap = 5)
@@ -81,4 +79,5 @@ for file in os.listdir(datadir):
                      (0, 255, 0), 1)
 
         cv2.imwrite(fname, 255 * img_lines)
-
+after = time()
+print('total time taken: '+str(after-before))
