@@ -23,7 +23,7 @@ def myEdgeFilter(img0, sigma):
     imgy = myImageFilter(smoothed, verticalSobelFilter)     # image gradient in the y direction
 
     # calculating gradient direction and magnitude matrices/2d arrays
-    gradientDirection = np.degrees(np.arctan2(imgy, imgx))
+    gradientDirection = np.rad2deg(np.arctan2(imgy, imgx))
     gradientMagnitude = np.hypot(imgx, imgy)
 
     # make all angles positive, range = [0, 180)
